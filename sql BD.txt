@@ -78,8 +78,8 @@ create table turmas_data (
 	constraint fk_ID_TACUP foreign key (ID_Turma_Aluno_Curso_Unidade_Professor) references servidor(ID_Turma_Aluno_Curso_Unidade_Professor)
 )
 
-create table servidor_unidade (
-	ID_Servidor_Unidade number primary key,
+create table trabalha (
+	ID_Trabalh number primary key,
 	ID_Servidor number not null,
 	ID_Unidade number not null,
 	
@@ -116,7 +116,7 @@ create table aluno (
 	grau_instrucao_aluno varchar2(30) not null,
 	email_aluno varchar2(40) not null,
 	telefone_aluno varchar2(25) not null,
-	rua_aluno varchar2(150) not null,
+	rua_aluno varchar2(1
 	numero_aluno varchar2(20) not null,
 	bairro_aluno varchar2(150) not null,
 	cep_aluno varchar2(10) not null,
@@ -178,8 +178,7 @@ create table turmas (
 	constraint fk_ID_Aluno foreign key (ID_Aluno) references aluno(ID_Aluno),
 	constraint fk_ID_Professor foreign key (ID_Professor) references professor(ID_Professor),
 	constraint fk_ID_Unidade foreign key (ID_Unidade) references unidade(ID_Unidade),
-	constraint fk_ID_Curso foreign key (ID_Curso) references curso(ID_Curso0)
+	constraint fk_ID_Curso foreign key (ID_Curso) references curso(ID_Curso)
 )
-
 
 
