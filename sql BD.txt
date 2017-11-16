@@ -1,0 +1,185 @@
+create table curso (
+	ID_Curso number primary key,
+	nome_curso varchar2(50) not null,
+	grau_instrucao_curso varchar2(30) not null,
+	finalidade varchar2(100) not null,
+	parceria varchar2(50),
+	carga_horaria number(*,2) not null
+)
+
+create table vinculo (
+	ID_Vinculo number primary key,
+	regime_juridico varchar2(50) not null,
+	tipo varchar2(30) not null
+)
+
+create table cargo (
+	ID_Cargo primary key,
+	especializacao varchar2(50) not null,
+	nivel varchar2(30) not null,
+	nome_cargo varchar2(30) not null
+)
+
+create table servidor (
+	ID_Servidor number primary key,
+	Nome_serv varchar2(30) not null,
+	RF_Serv varchar2(30) not null,
+	Sexo_serv char(1) not null,
+	CPF_serv varchar2(20) not null,
+	Raca_serv varchar2(30) not null,
+	RG_serv varchar2(15) not null,
+	Numero_serv varchar2(20) not null,
+	Rua_serv varchar2(50) not null,
+	Bairro_serv varchar2(60) not null,
+	CEP_serv varchar2(10) not null,
+	Cidade_serv varchar2(50) not null,
+	Data_serv date not null,	
+	ID_Vinculo number not null,
+	ID_Cargo number not null,
+	
+	constraint fk_ID_Vinculo foreign key (ID_Vinculo) references vinculo(ID_Vinculo),
+	constraint fk_ID_Cargo foreign key (ID_Cargo) references cargo(ID_Cargo),
+	constraint ck_sexo check(Sexo_serv in ('m','f'))
+)
+
+create table servidor_email (
+	ID_Servidor_Email number primary key,
+	ID_Servidor number not null,
+	email_serv varchar2(40) not null,
+
+	constraint fk_ID_Servidor foreign key (ID_Servidor) references servidor(ID_Servidor)
+)
+
+create table servidor_telefone (
+	ID_Servidor_Telefone varchar2(30) primary key,
+	telefone_serv varchar2(20) not null,
+	ID_Servidor number not null
+
+	constraint fk_ID_Servidor foreign key (ID_Servidor) references servidor(ID_Servidor)
+)
+
+create table unidade (
+	ID_Unidade number primary key,
+	nome_unidade varchar2(50) not null,
+	tipo varchar2(30) not null,
+	numero_CNES varchar2(40) not null,
+	rua_unidade varchar2(60) not null,
+	numero_unidade varchar2(30) not null,
+	bairro_unidade varchar2(60) not null,
+	cep_unidade varchar2(10) not null,
+	cidade_unidade varchar2(60) not null
+)
+
+create table turmas_data (
+	ID_Turma_Data number primary key,
+	data_aulas date not null,
+	ID_Turma_Aluno_Curso_Unidade_Professor number not null,
+
+	constraint fk_ID_TACUP foreign key (ID_Turma_Aluno_Curso_Unidade_Professor) references servidor(ID_Turma_Aluno_Curso_Unidade_Professor)
+)
+
+create table servidor_unidade (
+	ID_Servidor_Unidade number primary key,
+	ID_Servidor number not null,
+	ID_Unidade number not null,
+	
+	constraint fk_ID_Servidor foreign key (ID_Servidor) references servidor(ID_Servidor),
+	constraint fk_ID_Unidade foreign key (ID_Unidade) references unidade(ID_Unidade)
+)
+
+create table professor (
+	ID_Professor number primary key,
+	nome_professor varchar2(100) not null,
+	sexo_professor char(1) not null,
+	cpf_professor varchar2(25) not null,
+	email_professor varchar2(40) not null,
+	telefone_professor varchar2(25) not null,
+	rua_professor varchar2(60) not null,
+	numero_professor varchar2(20) not null,
+	bairro_professor varchar2(60) not null,
+	cep_professor varchar2(10) not null,
+	cidade_professor varchar2(60) not null,
+	data_professor date, not null 
+	rg_professor varchar2(10) not null,
+	materia_professor varchar2(30) not null,
+	ID_Servidor number not null,
+
+	constraint fk_ID_Servidor foreign key (ID_Servidor) references servidor(ID_Servidor),
+	constraint ck_sexo check(sexo_professor in ('m','f'))	
+)
+
+create table aluno (
+	nome_aluno varchar2(100),
+	rf_aluno varchar2(20) not null,
+	sexo_aluno char(1) not null,
+	cpf_aluno varchar2(25) not null,
+	grau_instrucao_aluno varchar2(30) not null,
+	email_aluno varchar2(40) not null,
+	telefone_aluno varchar2(25) not null,
+	rua_aluno varchar2(60) not null,
+	numero_aluno varchar2(20) not null,
+	bairro_aluno varchar2(60) not null,
+	cep_aluno varchar2(10) not null,
+	cidade_aluno varchar2(60) not null,
+	data_aluno date not null,
+	ID_Servidor number not null,
+
+	constraint fk_ID_Servidor foreign key (ID_Servidor) references servidor(ID_Servidor),
+	constraint ck_sexo check(sexo_aluno in ('m','f'))	
+)
+
+create table curso_cargo (
+	ID_Curso_Cargo number primary key,
+	cargo varchar2(20) not null,
+	ID_Curso number not null,
+
+	constraint fk_ID_Curso foreign key (ID_Curso) references curso(ID_Curso)
+)
+
+create table coordenacao (
+	ID_Coordenacao_Supervisao number primary key,
+	nome_coordenacao varchar2(100) not null,
+	rua_coordenacao varchar2(60) not null,
+	numero_coordenacao varchar2(20) not null,
+	bairro_coordenacao varchar2(60) not null,
+	cep_coordenacao varchar2(10) not null,
+	cidade_coordenacao varchar2(60) not null,
+	ID_Supervisao number not null,
+
+	constraint fk_ID_Supervisao foreign key (ID_Supervisao) references supervisao(ID_Supervisao)
+)
+
+create table supervisao (
+	ID_Supervisao_Unidade number primary key,
+	ID_Supervisao_Coordenacao number primary key,
+	nome_supervisao varchar2(100) not null,
+	rua_supervisao varchar2(60) not null,
+	numero_supervisao varchar2(20) not null,
+	bairro_supervisao varchar2(60) not null,
+	cep_supervisao varchar2(10) not null,
+	cidade_supervisao varchar2(60) not null,
+	ID_Unidade number not null,
+	ID_Coordenacao number not null,
+
+	constraint fk_ID_Unidade foreign key (ID_Unidade) references unidade(ID_Unidade),
+	constraint fk_ID_Coordenacao foreign key (ID_Coordenacao) references coordenacao(ID_Coordenacao)	
+)
+
+create table turmas (
+	ID_Turma_Aluno_Curso_Unidade_Professor number primary key,
+	local varchar2(60) not null,
+	quant_vagas number not null,
+	quant_aulas number not null,
+	ID_Aluno number not null,
+	ID_Professor number not null,
+	ID_Unidade number not null,
+	ID_Curso number not null,
+
+	constraint fk_ID_Aluno foreign key (ID_Aluno) references aluno(ID_Aluno),
+	constraint fk_ID_Professor foreign key (ID_Professor) references professor(ID_Professor),
+	constraint fk_ID_Unidade foreign key (ID_Unidade) references unidade(ID_Unidade),
+	constraint fk_ID_Curso foreign key (ID_Curso) references curso(ID_Curso0)
+)
+
+
+
