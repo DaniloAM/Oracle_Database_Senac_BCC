@@ -1,7 +1,7 @@
 create table curso (
 	ID_Curso number primary key,
-	nome_curso varchar2(50) not null,
-	grau_instrucao_curso varchar2(30) not null,
+	nome_curso varchar2(255) not null,
+	grau_instrucao_curso varchar2(20) not null,
 	finalidade varchar2(100) not null,
 	parceria varchar2(50),
 	carga_horaria number(*,2) not null
@@ -10,27 +10,27 @@ create table curso (
 create table vinculo (
 	ID_Vinculo number primary key,
 	regime_juridico varchar2(50) not null,
-	tipo varchar2(30) not null
+	tipo varchar2(50) not null
 )
 
 create table cargo (
-	ID_Cargo primary key,
-	especializacao varchar2(50) not null,
+	ID_Cargo number primary key,
+	especializacao varchar2(255) not null,
 	nivel varchar2(30) not null,
-	nome_cargo varchar2(30) not null
+	nome_cargo varchar2(255) not null
 )
 
 create table servidor (
 	ID_Servidor number primary key,
-	Nome_serv varchar2(30) not null,
-	RF_Serv varchar2(30) not null,
+	Nome_serv varchar2(255) not null,
+	RF_Serv char(8) not null,
 	Sexo_serv char(1) not null,
 	CPF_serv varchar2(20) not null,
 	Raca_serv varchar2(30) not null,
 	RG_serv varchar2(15) not null,
 	Numero_serv varchar2(20) not null,
-	Rua_serv varchar2(50) not null,
-	Bairro_serv varchar2(60) not null,
+	Rua_serv varchar2(150) not null,
+	Bairro_serv varchar2(150) not null,
 	CEP_serv varchar2(10) not null,
 	Cidade_serv varchar2(50) not null,
 	Data_serv date not null,	
@@ -110,15 +110,15 @@ create table professor (
 
 create table aluno (
 	nome_aluno varchar2(100),
-	rf_aluno varchar2(20) not null,
+	rf_aluno char(8) not null,
 	sexo_aluno char(1) not null,
 	cpf_aluno varchar2(25) not null,
 	grau_instrucao_aluno varchar2(30) not null,
 	email_aluno varchar2(40) not null,
 	telefone_aluno varchar2(25) not null,
-	rua_aluno varchar2(60) not null,
+	rua_aluno varchar2(150) not null,
 	numero_aluno varchar2(20) not null,
-	bairro_aluno varchar2(60) not null,
+	bairro_aluno varchar2(150) not null,
 	cep_aluno varchar2(10) not null,
 	cidade_aluno varchar2(60) not null,
 	data_aluno date not null,
@@ -130,7 +130,7 @@ create table aluno (
 
 create table curso_cargo (
 	ID_Curso_Cargo number primary key,
-	cargo varchar2(20) not null,
+	cargo varchar2(255) not null,
 	ID_Curso number not null,
 
 	constraint fk_ID_Curso foreign key (ID_Curso) references curso(ID_Curso)
@@ -138,8 +138,8 @@ create table curso_cargo (
 
 create table coordenacao (
 	ID_Coordenacao_Supervisao number primary key,
-	nome_coordenacao varchar2(100) not null,
-	rua_coordenacao varchar2(60) not null,
+	nome_coordenacao varchar2(255) not null,
+	rua_coordenacao varchar2(150) not null,
 	numero_coordenacao varchar2(20) not null,
 	bairro_coordenacao varchar2(60) not null,
 	cep_coordenacao varchar2(10) not null,
@@ -152,8 +152,8 @@ create table coordenacao (
 create table supervisao (
 	ID_Supervisao_Unidade number primary key,
 	ID_Supervisao_Coordenacao number primary key,
-	nome_supervisao varchar2(100) not null,
-	rua_supervisao varchar2(60) not null,
+	nome_supervisao varchar2(150) not null,
+	rua_supervisao varchar2(150) not null,
 	numero_supervisao varchar2(20) not null,
 	bairro_supervisao varchar2(60) not null,
 	cep_supervisao varchar2(10) not null,
@@ -167,7 +167,7 @@ create table supervisao (
 
 create table turmas (
 	ID_Turma_Aluno_Curso_Unidade_Professor number primary key,
-	local varchar2(60) not null,
+	local varchar2(150) not null,
 	quant_vagas number not null,
 	quant_aulas number not null,
 	ID_Aluno number not null,
